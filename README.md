@@ -7,8 +7,8 @@ A portfolio of SQL challenges completed during Le Wagon’s Data Analytics Bootc
 ---
 
 ## 📂 Repository Structure
-
-📁 circle-sql-challenges
+```text
+📁 circle-sql-challenges 
 ├─ 📁 challenge-01-inventory/                
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
@@ -22,7 +22,7 @@ A portfolio of SQL challenges completed during Le Wagon’s Data Analytics Bootc
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
 └─ 📄 README.md                               
-
+```
 Each challenge folder contains the **exact SQL** used in `sql-queries/` and a short local README with run notes. This top-level README summarizes objectives and artifacts across the suite.
 
 ---
