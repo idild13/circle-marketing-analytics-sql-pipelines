@@ -37,105 +37,85 @@ Each challenge folder contains the **exact SQL** used in `sql-queries/` and a sh
 
 ---
 
-## ✅ Challenge 01 — Data Request: Circle Inventory Management
+## 📝 Challenge Details
 
-**Goal:** Turn raw stock into enriched KPIs and compare **views vs. tables** for freshness and cost.
+### ✅ Challenge 01 — Data Request: Circle Inventory Management
+
+**Goal:** Transform raw stock data into an enriched KPI dataset and compare **views vs. tables** for freshness and cost.
 
 **Source tables**
-- `circle_stock` (linked sheet)
+- `circle_stock` (linked from Google Sheets)
+- `circle_sales`
 
 **Transformations**
 - `circle_stock_name_view` → add `product_id` & `product_name`
 - `circle_stock_cat_view` → derive `model_type`
 - `circle_stock_kpi_view` → compute `in_stock` & `stock_value`
-- **Pipeline simplification**: one combined view `cc_stock`
-- **Stakeholder view**: `cc_stock_model_type` aggregates KPIs by `model_type`
+- Combine into `cc_stock` for a simplified pipeline
+- `cc_stock_model_type` → aggregates KPIs by `model_type`
 
 **Key metrics**
-- Total products, shortage rate, total stock/value  
-- KPIs refreshed hourly by relying on **views** (no manual table refresh)
+- Total products, shortage rate, stock quantity, stock value  
+- KPIs refresh automatically via **views**
 
 **Deliverables**
-- Views: `circle_stock_name_view`, `circle_stock_cat_view`, `circle_stock_kpi_view`, `cc_stock`, `cc_stock_model_type`
-- (Optional) Tables when needed for snapshots (no `_view` suffix)
+- Views: `circle_stock_name_view`, `circle_stock_cat_view`, `circle_stock_kpi_view`, `cc_stock`, `cc_stock_model_type`  
+- Optional tables for snapshots (no `_view` suffix)
 
 ---
 
-## 📊 Challenge 02 — Aggregation & SQL Pivot Table
+### 📊 Challenge 02 — Aggregation & SQL Pivot Table
 
-**Goal:** KPI rollups, drilldowns, and pivots for inventory.
+**Goal:** Roll up KPIs, build pivot-style summaries, and estimate days of stock for top sellers.
 
-**Source tables**
-- `circle_stock_kpi` (from Challenge 01 pipeline)
+**Source**
+- `circle_stock_kpi` (output of Challenge 01)
 
 **Analyses**
-- Global metrics:  
-  - `COUNT(product_id)` (total products)  
-  - `COUNTIF(in_stock="1")` (in stock)  
-  - `COUNTIF(in_stock="0")/COUNT(*)` (shortage rate)  
-  - `SUM(stock_value)`, `SUM(stock)`
-- By `model_type` and by (`model_type`, `model_name`), sorted by `total_stock_value` (DESC)
-- **Sales-linked enrichments** (top sellers & days of stock):  
-  - Top products by `SUM(qty)` from `circle_sales`  
-  - 91-day average sales & **days of stock** ≈ `forecast_stock / avg_daily_qty_91`
+- Global metrics: product count, in-stock %, shortage %, stock & value totals  
+- Grouped by `model_type` and by (`model_type`, `model_name`)  
+- Sales enrichment: top products via `SUM(qty)` in `circle_sales`  
+- 91-day average sales & days-of-stock calculation (`forecast_stock / avg_daily_qty_91`)
 
 **Deliverables**
-- Aggregation queries and result sets grouped by `model_type` and `model_name`
-- “Top products” flagging & **low-stock watchlist** with days-remaining
+- Aggregation queries and tables grouped by category & product  
+- Watchlist of fast-moving items with low stock
 
 ---
 
-## 📦 Challenge 03 — Parcel Tracking (SKIPPED)
+### 📦 Challenge 03 — Parcel Tracking *(Skipped)*
 
-> Skipped by design; documented here for completeness. Independent of other challenges.
+Planned (but not implemented) analysis for the logistics team: shipment status, delivery times, delays, and refund rates.
 
-**Goal:** Status, timing KPIs, and SLA-style analytics on parcels.
+**Data (for future use)**
+- `cc_parcel`
+- `cc_parcel_product`
 
-**Source tables**
-- `cc_parcel`, `cc_parcel_product`
-
-**Intended pipeline**
-- **Status** via `CASE`: `Cancelled`, `In progress`, `In Transit`, `Delivered`
-- **Date normalization** with `PARSE_DATE()` if needed  
-- KPIs with `DATE_DIFF()`:  
-  - `shipping_time` (purchase → shipping)  
-  - `delivery_time` (shipping → delivery)  
-  - `total_time` (purchase → delivery)
-- **Aggregations**:  
-  - Global stats → `cc_parcel_kpi_global`  
-  - By carrier → `cc_parcel_kpi_transporter`  
-  - By priority → `cc_parcel_kpi_priority` (+ `SAFE_DIVIDE(shipping_time,total_time)` ratio)  
-  - Monthly trend → `cc_parcel_kpi_month` (via `EXTRACT(MONTH FROM date_purchase)`)
-- **Delay analysis:** flag `delay` where `total_time > 5` days and compute `delay_rate`
-
-**Deliverables (stubs)**
-- View/table names and schema contracts for future implementation
+**Intended outputs**
+- `cc_parcel_kpi` with `status`, `shipping_time`, `delivery_time`, `total_time`  
+- Aggregations by carrier, priority, and month  
+- Delay metrics (`delay_rate`)
 
 ---
 
-## 🧲 Challenge 04 — Acquisition Funnel
+### 🧲 Challenge 04 — Acquisition Funnel
 
-**Goal:** Build a complete **Lead → Opportunity → Customer** funnel with conversion rates & cycle times.
+**Goal:** Build a complete **Lead → Opportunity → Customer** funnel with conversion rates and cycle times.
 
 **Source table**
 - `cc_funnel` (linked sheet)
 
 **Transformations**
-- `cc_funnel_kpi` with `deal_stage`:
-  - `Lead` if no later dates
-  - `Opportunity` if `date_opportunity` present and no `date_customer`/`date_lost`
-  - `Customer` if `date_customer` present
-  - `Churn` if `date_lost` present
+- `cc_funnel_kpi` with `deal_stage` (Lead, Opportunity, Customer, Lost)
 
 **Analyses**
-- Current funnel state: global counts, by `priority`, and pivot with stages as columns
-- Conversion metrics & times:
-  - Booleans: `Lead2Opportunity`, `Opportunity2Customer`, `Lead2Customers`
-  - Times: `DATE_DIFF` between **stage dates** (L2O, O2C, L2C)
-  - Aggregations: global, by `priority`, by month (`EXTRACT(MONTH FROM date_lead)`)
+- Current funnel state (global, by priority, pivoted by stage)  
+- Conversion rates (L2O, O2C, L2C)  
+- Average times between stages (DATE_DIFF)  
+- Monthly evolution (`EXTRACT(MONTH FROM date_lead)`)
 
 **Deliverables**
-- `cc_funnel_kpi` plus aggregated result queries for counts, rates, and average times
+- `cc_funnel_kpi` plus aggregated reports on counts, rates, and cycle lengths
 
 ---
 
@@ -159,24 +139,12 @@ Each challenge folder contains the **exact SQL** used in `sql-queries/` and a sh
 
 ---
 
-## 🧩 What I Focused On
-
-- **Pipelines that scale**: layered views, then selective materialization
-- **Naming clarity**: `_view` vs. table, consistent object prefixes (`cc_*`)
-- **Business-ready outputs**: stakeholder-specific views (e.g., `cc_stock_model_type`)
-- **Performance awareness**: read volume & compute time trade-offs
+## 🚀 Outcomes
+- Built robust SQL pipelines for stock, sales, and funnel analytics.  
+- Delivered datasets ready for BI dashboards and stakeholder reporting.  
+- Practiced performance trade-offs (**views vs. tables**) and consistent naming.
 
 ---
 
-## 🔭 Roadmap
-
-- Scheduled refresh (BigQuery Scheduled Queries, dbt, or Airflow)  
-- Data quality checks for dates and referential integrity  
-- Alerts for shortage & delayed parcels  
-- Visualization (Looker Studio/Hex/Metabase) on top of the views
-
----
-
-## 📚 Source & Challenge Briefs
-
-Bootcamp handouts and solution references for the four challenges (inventory, aggregation/pivot, parcels, funnel).  [oai_citation:0‡Challenges - July 14.pdf](file-service://file-1nQbciSAy9VCS836zJY7f9)
+## 📑 References
+- Bootcamp briefs for all challenges
