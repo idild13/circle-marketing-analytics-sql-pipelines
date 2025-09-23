@@ -94,4 +94,4 @@ FROM `course15.circle_stock_name`;
   stock * price AS stock_value
 FROM `course15.circle_stock_cat`;
 
--- The enriched circle_stock_kpi table can now be used to perform an in-depth analysis of stock statistics (stock, shortage, stock_value) by model_name, model_type, product_name, size.
+-- The enriched circle_stock_kpi table can now be used to perform an in-depth analysis of stock statistics (stock, shortage, stock_value) by model_name, model_type, product_name, size. (14 columns, 468 rows)
