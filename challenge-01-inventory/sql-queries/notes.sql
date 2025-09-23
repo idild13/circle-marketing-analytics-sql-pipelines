@@ -88,8 +88,7 @@ SELECT
   *
 FROM `course15.circle_stock_name`;
 
--- Add in_stock + stock_value
-SELECT
+-- Add in_stock + stock_value & save the result in a new, clean, and enhanced circle_stock_kpi table.
   *,
   CASE WHEN stock = 0 THEN "0" ELSE "1" END AS in_stock,
   stock * price AS stock_value
