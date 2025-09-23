@@ -62,14 +62,14 @@ HAVING COUNT(*) > 1;
 -- 3) Enrichment
 -------------------------------
 
--- Add product_name
+-- Add product_name & save the result as a new circle_stock_name table containing all the same columns as the circle_stock table + the new product_name column.
 SELECT
-  CONCAT(model_id, "_", color, "_", IFNULL(size, '')) AS product_id,
+  product_id,
   CONCAT(model_name, " ", color_name, " - Size ", IFNULL(size, '')) AS product_name,
   *
 FROM `course15.circle_stock`;
 
--- Add model_type
+-- Add model_type & save the result as a new circle_stock_cat table containing all the same columns as the circle_stock_name table + the new model_type column.
 SELECT
   product_id,
   product_name,
