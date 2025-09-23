@@ -93,3 +93,5 @@ FROM `course15.circle_stock_name`;
   CASE WHEN stock = 0 THEN "0" ELSE "1" END AS in_stock,
   stock * price AS stock_value
 FROM `course15.circle_stock_cat`;
+
+-- The enriched circle_stock_kpi table can now be used to perform an in-depth analysis of stock statistics (stock, shortage, stock_value) by model_name, model_type, product_name, size.
