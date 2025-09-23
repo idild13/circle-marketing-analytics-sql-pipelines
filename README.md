@@ -125,7 +125,6 @@ Planned (but not implemented) analysis for the logistics team: shipment status, 
    - Inventory: `circle_stock`, `circle_sales`  
    - Parcels: `cc_parcel`, `cc_parcel_product`  
    - Funnel: `cc_funnel`  
-   Use “Create table from Google Sheets”; set **Header rows to skip = 1**.
 
 2) **Create views** in order (per challenge). Use `_view` suffix for reusable logic.
 
