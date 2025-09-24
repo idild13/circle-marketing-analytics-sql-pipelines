@@ -71,16 +71,35 @@ Each challenge folder contains the **exact SQL** used in `sql-queries/` and a sh
 **Source**
 - `circle_stock_kpi` (output of Challenge 01)
 
-**Analyses**
-- Global metrics: product count, in-stock %, shortage %, stock & value totals  
-- Grouped by `model_type` and by (`model_type`, `model_name`)  
-- Sales enrichment: top products via `SUM(qty)` in `circle_sales`  
-- 91-day average sales & days-of-stock calculation (`forecast_stock / avg_daily_qty_91`)
+## 🔎 Analyses
+- **Global metrics**  
+  - `COUNT(product_id)` → total products  
+  - `COUNTIF(in_stock="1")` → in stock  
+  - `COUNTIF(in_stock="0") / COUNT(*)` → shortage rate  
+  - `SUM(stock_value)` and `SUM(stock)`  
 
-**Deliverables**
-- Aggregation queries and tables grouped by category & product  
-- Watchlist of fast-moving items with low stock
+- **Breakdowns**  
+  - By `model_type`  
+  - By (`model_type`, `model_name`)  
+  - Sorted by `total_stock_value` (DESC)  
 
+- **Sales-linked enrichments**  
+  - Top 10 products by `SUM(qty)` from `circle_sales`  
+  - 91-day sales averages (`qty_91`, `avg_daily_qty_91`)  
+  - **Days of stock** ≈ `forecast_stock / avg_daily_qty_91`  
+
+---
+
+## 📑 Deliverables
+
+- **Final tables**  
+  - **`circle_stock_kpi_top`** → copy of `circle_stock_kpi` with `top_products` flag (0/1).  
+  - **`circle_sales_daily`** → aggregates last 91 days of sales per product (`qty_91`, `avg_daily_qty_91`).  
+
+- **Analytical outputs**  
+  - Aggregated KPIs by `model_type` and `model_name`.  
+  - **Low-stock watchlist**: join of `circle_stock_kpi_top` with `circle_sales_daily` to calculate `nb_days` of stock remaining for top products with fewer than 50 units in stock.  
+   
 ---
 
 ### 📦 Challenge 03 — Parcel Tracking *(Skipped)*
