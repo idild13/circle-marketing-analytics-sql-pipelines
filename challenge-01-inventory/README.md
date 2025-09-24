@@ -53,7 +53,7 @@ Imported into `course15` dataset (EU location).
 ### 3) Outputs
 - `circle_stock_name` – adds product_id & product_name.  
 - `circle_stock_cat` – adds model_type.  
-- `circle_stock_kpi` – final enriched table with KPIs.  
+- [`circle_stock_kpi](https://docs.google.com/spreadsheets/d/1FgA39GmpsrwM7L_QHlWOG6sUZaa1BTOr9WVsrtVyFNw/edit?usp=sharing) – final enriched table with KPIs.  
 
 ---
 
