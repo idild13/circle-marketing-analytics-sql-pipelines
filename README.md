@@ -71,7 +71,7 @@ Each challenge folder contains the **exact SQL** used in `sql-queries/` and a sh
 **Source**
 - `circle_stock_kpi` (output of Challenge 01)
 
-## 🔎 Analyses
+**Analyses**
 - **Global metrics**  
   - `COUNT(product_id)` → total products  
   - `COUNTIF(in_stock="1")` → in stock  
@@ -88,9 +88,8 @@ Each challenge folder contains the **exact SQL** used in `sql-queries/` and a sh
   - 91-day sales averages (`qty_91`, `avg_daily_qty_91`)  
   - **Days of stock** ≈ `forecast_stock / avg_daily_qty_91`  
 
----
 
-## 📑 Deliverables
+**Deliverables**
 
 - **Final tables**  
   - **`circle_stock_kpi_top`** → copy of `circle_stock_kpi` with `top_products` flag (0/1).  
