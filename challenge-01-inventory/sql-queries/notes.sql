@@ -62,14 +62,14 @@ HAVING COUNT(*) > 1;
 -- 3) Enrichment
 -------------------------------
 
--- Add product_name & save the result as a new circle_stock_name table containing all the same columns as the circle_stock table + the new product_name column.
+-- Add product_name
 SELECT
   product_id,
   CONCAT(model_name, " ", color_name, " - Size ", IFNULL(size, '')) AS product_name,
   *
 FROM `course15.circle_stock`;
 
--- Add model_type & save the result as a new circle_stock_cat table containing all the same columns as the circle_stock_name table + the new model_type column.
+-- Add model_type
 SELECT
   product_id,
   product_name,
@@ -88,10 +88,48 @@ SELECT
   *
 FROM `course15.circle_stock_name`;
 
--- Add in_stock + stock_value & save the result in a new, clean, and enhanced circle_stock_kpi table.
+-- Add in_stock + stock_value
+SELECT
   *,
   CASE WHEN stock = 0 THEN "0" ELSE "1" END AS in_stock,
   stock * price AS stock_value
 FROM `course15.circle_stock_cat`;
 
--- The enriched circle_stock_kpi table can now be used to perform an in-depth analysis of stock statistics (stock, shortage, stock_value) by model_name, model_type, product_name, size. (14 columns, 468 rows)
+-- The enriched circle_stock_kpi view can now be used to perform in-depth analysis
+-- of stock statistics (stock, shortage, stock_value) by model_name, model_type,
+-- product_name, size. (14 columns, 468 rows)
+
+-------------------------------
+-- 4) Advanced SQL Extension: Views
+-------------------------------
+
+-- Consolidated view (cc_stock)
+-- Combines product_id + product_name → model_type → KPIs
+CREATE OR REPLACE VIEW `course15.cc_stock` AS
+SELECT
+  product_id,
+  product_name,
+  model_id,
+  model_name,
+  model_type,
+  color,
+  color_name,
+  size,
+  current_stock_level,
+  forecasted_stock_level,
+  price,
+  in_stock,
+  stock_value
+FROM `course15.circle_stock_kpi`;
+
+-- Aggregated view by model_type (cc_stock_model_type)
+CREATE OR REPLACE VIEW `course15.cc_stock_model_type` AS
+SELECT
+  model_type,
+  COUNT(in_stock) AS nb_products,
+  SUM(CAST(in_stock AS INT64)) AS nb_products_in_stock,
+  ROUND(AVG(1 - CAST(in_stock AS FLOAT64)), 3) AS shortage_rate,
+  SUM(CAST(stock_value AS FLOAT64)) AS total_stock_value
+FROM `course15.circle_stock_kpi`
+GROUP BY model_type
+ORDER BY model_type;
