@@ -53,7 +53,25 @@ Imported into `course15` dataset (EU location).
 ### 3) Outputs
 - `circle_stock_name` – adds product_id & product_name.  
 - `circle_stock_cat` – adds model_type.  
-- [circle_stock_kpi](https://docs.google.com/spreadsheets/d/1FgA39GmpsrwM7L_QHlWOG6sUZaa1BTOr9WVsrtVyFNw/edit?usp=sharing) – final enriched table with KPIs.  
+- [circle_stock_kpi](https://docs.google.com/spreadsheets/d/1FgA39GmpsrwM7L_QHlWOG6sUZaa1BTOr9WVsrtVyFNw/edit?usp=sharing) – final enriched table with KPIs (`in_stock`, `stock_value`).  
+
+---
+
+## ⚡ Advanced SQL Extension — Views vs. Tables
+
+Later, I revisited this challenge to practice **views** and simplify the pipeline.  
+
+- Originally, the pipeline required **3 intermediate tables**:  
+  `circle_stock_name` → `circle_stock_cat` → `circle_stock_kpi`  
+
+- I refactored them into **3 consecutive views**:  
+  `circle_stock_name_view` → `circle_stock_cat_view` → `circle_stock_kpi_view`  
+
+- Then, I consolidated them into a **single combined view**:  
+  - `cc_stock` → a one-stop enriched view with all descriptive fields and KPIs.  
+  - `cc_stock_model_type` → aggregates stock KPIs by `model_type` (total products, in-stock, shortage rate, total stock value).  
+
+This made the pipeline **lighter, more maintainable, and always up-to-date**, since views re-run queries on the latest Google Sheets data.
 
 ---
 
@@ -64,4 +82,4 @@ A cleaned and enriched dataset that gives the purchasing team a clear picture of
 - product categories,  
 - and stock value.  
 
-Ready for downstream analysis and dashboards.
+Ready for downstream analysis, pivoting (Challenge 02), and dashboards.
