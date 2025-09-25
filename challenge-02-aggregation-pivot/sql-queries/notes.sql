@@ -93,5 +93,53 @@ SELECT
     ELSE NULL
   END AS nb_days
 FROM `course15.circle_stock_kpi_top` s
-LEFT JOIN `course15.circle_sales_daily_ROUND` d
+LEFT JOIN `course15.circle_sales_daily` d
   ON s.product_id = d.product_id;
+
+-- Prioritized stock monitoring query ⭐
+
+SELECT
+  -- Identity
+  s.product_id,
+  s.product_name,
+  s.model_id,
+  s.model_name,
+  s.model_type,
+  s.color,
+  s.color_name,
+  s.size,
+
+  -- Inventory
+  s.stock,
+  s.forecast_stock,
+  s.in_stock,
+
+  -- Business value
+  s.price,
+  s.stock_value,
+
+  -- Demand signal
+  s.top_products,
+  d.qty_91,
+  d.avg_daily_qty_91,
+
+  -- Replenishment urgency
+  CASE
+    WHEN d.avg_daily_qty_91 > 0 
+         THEN ROUND(s.forecast_stock / d.avg_daily_qty_91, 1)
+    ELSE NULL
+  END AS nb_days_remaining,
+
+  -- 🚨 Alert flag
+  CASE
+    WHEN s.forecast_stock < 50 AND s.top_products = 1 
+         THEN "⚠️ Reorder soon"
+    WHEN s.forecast_stock < 50 
+         THEN "Low stock"
+    ELSE "OK"
+  END AS stock_status
+
+FROM `course15.circle_stock_kpi_top` s
+LEFT JOIN `course15.circle_sales_daily` d
+  ON s.product_id = d.product_id
+ORDER BY stock_status DESC, nb_days_remaining ASC;
