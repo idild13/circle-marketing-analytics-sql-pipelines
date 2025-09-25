@@ -96,7 +96,7 @@ FROM `course15.circle_stock_kpi_top` s
 LEFT JOIN `course15.circle_sales_daily` d
   ON s.product_id = d.product_id;
 
--- Prioritized stock monitoring query ⭐
+-- Prioritized stock monitoring query as low-stock watchlist ⭐
 
 SELECT
   -- Identity
