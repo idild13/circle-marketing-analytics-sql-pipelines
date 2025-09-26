@@ -59,8 +59,12 @@ Each challenge folder contains the **exact SQL** used in `sql-queries/` and a sh
 - KPIs refresh automatically via **views**
 
 **Deliverables**
-- Views: `circle_stock_name_view`, `circle_stock_cat_view`, `circle_stock_kpi_view`, `cc_stock`, `cc_stock_model_type`  
-- Optional tables for snapshots (no `_view` suffix)
+- Views: circle_stock_name_view, circle_stock_cat_view, circle_stock_kpi_view, cc_stock, cc_stock_model_type
+- Optional tables for snapshots (no _view suffix) 
+
+**Advanced SQL Extension**
+
+Later, the pipeline was restructured to replace intermediate tables with views, keeping the data always fresh. Consolidation into cc_stock and cc_stock_model_type reduced complexity while maintaining stakeholder-ready KPIs.
 
 ---
 
@@ -72,33 +76,29 @@ Each challenge folder contains the **exact SQL** used in `sql-queries/` and a sh
 - `circle_stock_kpi` (output of Challenge 01)
 
 **Analyses**
-- **Global metrics**  
-  - `COUNT(product_id)` → total products  
-  - `COUNTIF(in_stock="1")` → in stock  
-  - `COUNTIF(in_stock="0") / COUNT(*)` → shortage rate  
-  - `SUM(stock_value)` and `SUM(stock)`  
-
-- **Breakdowns**  
-  - By `model_type`  
-  - By (`model_type`, `model_name`)  
-  - Sorted by `total_stock_value` (DESC)  
-
-- **Sales-linked enrichments**  
-  - Top 10 products by `SUM(qty)` from `circle_sales`  
-  - 91-day sales averages (`qty_91`, `avg_daily_qty_91`)  
-  - **Days of stock** ≈ `forecast_stock / avg_daily_qty_91`  
-
+- **Global metrics**: product counts, shortage rate, total stock & stock value  
+- **Breakdowns**: by `model_type` and (`model_type`, `model_name`), sorted by total stock value  
+- **Sales-linked enrichments**:  
+  - Top 10 products (`SUM(qty)`) from `circle_sales`  
+  - Rolling 91-day sales averages (`qty_91`, `avg_daily_qty_91`)  
+  - Days of stock ≈ `forecast_stock / avg_daily_qty_91`  
 
 **Deliverables**
-
-- **Final tables**  
-  - **`circle_stock_kpi_top`** → copy of `circle_stock_kpi` with `top_products` flag (0/1).  
-  - **`circle_sales_daily`** → aggregates last 91 days of sales per product (`qty_91`, `avg_daily_qty_91`).  
+- **Tables**:  
+  - `circle_stock_kpi_top` → enriched with a `top_products` flag  
+  - `circle_sales_daily` → 91-day sales aggregates  
 
 - **Analytical outputs**  
-  - Aggregated KPIs by `model_type` and `model_name`.  
-  - **Low-stock watchlist**: join of `circle_stock_kpi_top` with `circle_sales_daily` to calculate `nb_days` of stock remaining for top products with fewer than 50 units in stock.  
-   
+  - Aggregated KPIs by type and model  
+  - Low-stock watchlist with days-remaining until stockout  
+
+**Advanced SQL Extension**
+Introduced `cc_sales_daily_view` to practice the **view vs. table trade-off**:  
+- Views provide *fresh, always up-to-date metrics*.  
+- Tables save on *cost and runtime* for heavy queries on larger datasets.  
+
+This reinforced the **hybrid pipeline strategy**.
+
 ---
 
 ### 📦 Challenge 03 — Parcel Tracking *(Skipped)*
