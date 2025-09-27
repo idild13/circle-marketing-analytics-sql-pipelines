@@ -51,6 +51,8 @@ It focuses on summarizing KPIs and analyzing **top-selling products** to help th
   - Low-stock watchlist with estimated `nb_days` of stock remaining.
   - Risk flag (`stock_status`: OK / Low stock / ⚠️ Reorder soon)
 
+<img src="Screenshots/cc_low_stock_watchlist.png" alt="Preview of Circle - low stock watchlist" width="1500">
+
 ---
 
 ## ⚡ *Advanced SQL Extension — Views vs. Tables*
