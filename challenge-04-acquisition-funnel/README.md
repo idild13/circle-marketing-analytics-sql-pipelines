@@ -71,6 +71,14 @@ From **15 - Circle Funnel Google Sheet** → imported into `course15` dataset as
 
 ---
 
+## 📷 Previews 
+- Previews of enriched `cc_funnel_kpi` table by Lead, Opportunity, Customers, and Churn:
+
+  - <img src="Screenshots/cc_funnel_kpi_leads_preview.png" alt="funnel churn preview" width="1000">   
+  - <img src="Screenshots/cc_funnel_kpi_opportunity_preview.png" alt="funnel churn preview" width="1000">
+  - <img src="Screenshots/cc_funnel_kpi_customer_preview.png" alt="funnel churn preview" width="1000">   
+  - <img src="Screenshots/cc_funnel_kpi_churn_preview.png" alt="funnel churn preview" width="1000">
+
 ## 🎯 Result
 The sales team now has a clear, query-ready view of the funnel:  
 - Current pipeline state.  
