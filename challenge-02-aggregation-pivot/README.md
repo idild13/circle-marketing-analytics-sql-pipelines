@@ -35,20 +35,35 @@ It focuses on summarizing KPIs and analyzing **top-selling products** to help th
   - `qty_91` = total units sold in last 91 days  
   - `avg_daily_qty_91` = average daily sales  
   - Saved in `circle_sales_daily`.  
-- Cross-joined with `circle_stock_kpi_top` to estimate `nb_days_remaining = forecast_stock / avg_daily_qty_91`.  
+- Cross-joined with `circle_stock_kpi_top` to estimate **days of stock remaining** (`nb_days_remaining = forecast_stock / avg_daily_qty_91`) for top products with low stock (<50 units).
 
 ---
 
-## 📊 Deliverables
-- **Tables**:  
-  - [circle_stock_kpi_top](https://docs.google.com/spreadsheets/d/19Tw8Q3HP5bCgRVrJ7VsR0OsAth86miYG8Ux3HhxS_z8/edit?usp=sharing) — enriched stock table with `top_products` flag.  
-  - [circle_sales_daily](https://docs.google.com/spreadsheets/d/1Bi9BHxGPldT7FT_yOD9BOG1ufUTO529f2aJkVlOBNq0/edit?usp=sharing) — sales velocity metrics per product.  
-- **Queries**:  
-  - Aggregations at product, model, and type levels.  
-  - **Prioritized stock monitoring query** with:  
-    - Sales velocity (`avg_daily_qty_91`)  
-    - Days of stock remaining (`nb_days_remaining`)  
-    - Risk flag (`stock_status`: OK / Low stock / ⚠️ Reorder soon)  
+## 📑 Deliverables
+
+- **Tables**
+  - *(Intermediate)* `top_products` → temporary table identifying the 10 most-sold products.  
+  - [circle_stock_kpi_top](https://docs.google.com/spreadsheets/d/19Tw8Q3HP5bCgRVrJ7VsR0OsAth86miYG8Ux3HhxS_z8/edit?usp=sharing) → enriched with a `top_products` flag (0/1).  
+  - [circle_sales_daily](https://docs.google.com/spreadsheets/d/1UTFFqD0voY8s2By2f3SULKNQgTawtz1QulDBdga1bNA/edit?usp=sharing) → sales aggregation over the last 91 days (`qty_91`, `avg_daily_qty_91`).  
+
+- **Analytical outputs**  
+  - Aggregated KPIs by `model_type` and `model_name`.  
+  - Low-stock watchlist with estimated `nb_days` of stock remaining.
+  - Risk flag (`stock_status`: OK / Low stock / ⚠️ Reorder soon)
+
+---
+
+## ⚡ *Advanced SQL Extension — Views vs. Tables*
+
+*Later, I revisited this challenge to practice the trade-off between **views** and **tables***.  
+
+- *Created `cc_sales_daily_view` → a view version of the 91-day rolling sales query.*  
+- *Compared it with the table `circle_sales_daily` to evaluate performance and cost.*  
+- *Findings:*  
+  - Views ensure **always up-to-date results** but re-scan raw sales data.  
+  - Tables reduce **query cost and runtime** by materializing results — useful when data refreshes only once per day.  
+
+*This exercise reinforced the hybrid strategy: use views for freshness, tables for heavy/slow queries where hourly updates aren’t needed.*  
 
 ---
 
