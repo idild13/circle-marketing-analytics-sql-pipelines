@@ -70,7 +70,7 @@ FROM `course15.circle_sales`
 WHERE date_date BETWEEN DATE('2021-07-02') AND DATE('2021-10-01')
 GROUP BY product_id;
 
--- Watchlist: top products with low stock
+-- Watchlist: top products with low stock (< 50)
 SELECT
   product_id,
   stock,
