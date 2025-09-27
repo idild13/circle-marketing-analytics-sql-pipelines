@@ -8,17 +8,19 @@ A portfolio of SQL challenges completed during Le Wagon’s Data Analytics Bootc
 
 ## 📂 Repository Structure
 ```text
-📁 circle-sql-challenges 
+📁 circle-analytics-sql-challenge-suite 
 ├─ 📁 challenge-01-inventory/                
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
-├─ 📁 challenge-02-aggregation-pivot/       
+├─ 📁 challenge-02-aggregation-pivot/
+│  ├─ 📁 Screenshots/     
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
-├─ 📁 challenge-03-parcel-tracking/         
+├─ 📁 challenge-03-parcel-tracking/ (skipped)         
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
-├─ 📁 challenge-04-acquisition-funnel/       
+├─ 📁 challenge-04-acquisition-funnel/
+│  ├─ 📁 Screenshots/         
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
 └─ 📄 README.md                               
@@ -44,7 +46,7 @@ Each challenge folder contains the **exact SQL** used in `sql-queries/` and a sh
 **Goal:** Transform raw stock data into an enriched KPI dataset and compare **views vs. tables** for freshness and cost.
 
 **Source tables**
-- `circle_stock` (linked from Google Sheets)
+- `circle_stock` (Google Sheets  → BigQuery)
 - `circle_sales`
 
 **Transformations**
@@ -118,22 +120,37 @@ Planned (but not implemented) analysis for the logistics team: shipment status, 
 
 ### 🧲 Challenge 04 — Acquisition Funnel
 
-**Goal:** Build a complete **Lead → Opportunity → Customer** funnel with conversion rates and cycle times.
+**Goal:** Build a complete **Lead → Opportunity → Customer** funnel with conversion rates and cycle times to support the sales team.
 
-**Source table**
-- `cc_funnel` (linked sheet)
-
-**Transformations**
-- `cc_funnel_kpi` with `deal_stage` (Lead, Opportunity, Customer, Lost)
+**Source**
+- `cc_funnel` (Google Sheet → BigQuery)
 
 **Analyses**
-- Current funnel state (global, by priority, pivoted by stage)  
-- Conversion rates (L2O, O2C, L2C)  
-- Average times between stages (DATE_DIFF)  
-- Monthly evolution (`EXTRACT(MONTH FROM date_lead)`)
+- **Funnel state**
+  - Global overview
+  - By priority
+  - Pivoted by priority × deal stage
+- **Conversion statistics**
+  - Lead → Opportunity (L2O)
+  - Opportunity → Customer (O2C)
+  - Lead → Customer (L2C)
+- **Cycle times**
+  - Average days between lead, opportunity, and customer stages
+- **Breakdowns**
+  - Global  
+  - By priority  
+  - By month  
 
 **Deliverables**
-- `cc_funnel_kpi` plus aggregated reports on counts, rates, and cycle lengths
+- **`cc_funnel_kpi`** → enriched funnel table with `deal_stage` and conversion KPIs  
+- Aggregated reports:
+  - Funnel counts by stage
+  - Conversion rates (L2O, O2C, L2C)
+  - Average cycle lengths  
+
+**Result**
+- The sales team can monitor funnel health, conversion efficiency, and cycle length.  
+- Enables prioritization of leads by urgency and better forecasting of pipeline performance.
 
 ---
 
