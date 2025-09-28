@@ -140,7 +140,7 @@ Planned (but not implemented) analysis for the logistics team: shipment status, 
   - By month  
 
 **Deliverables**
-- **`cc_funnel_kpi`** → enriched funnel table with `deal_stage` and conversion KPIs  
+- `cc_funnel_kpi` → enriched funnel table with `deal_stage` and conversion KPIs  
 - Aggregated reports:
   - Funnel counts by stage
   - Conversion rates (L2O, O2C, L2C)
