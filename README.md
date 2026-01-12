@@ -1,4 +1,4 @@
-# Circle Analytics — SQL Suite 
+# Circle Marketing Analytics — Automated SQL Pipelines
 
 A portfolio of SQL challenges completed during Le Wagon’s Data Analytics Bootcamp using BigQuery for **Circle**, a circular, eco-responsible sportswear brand. Each challenge focuses on a different analytics workflow: **inventory**, **aggregation & pivots**, **parcel logistics**, and **sales funnel**. The work emphasizes **views vs. tables**, pipeline design, and performance trade-offs.
 
@@ -6,7 +6,7 @@ A portfolio of SQL challenges completed during Le Wagon’s Data Analytics Bootc
 
 ## 📂 Repository Structure
 ```text
-📁 circle-analytics-sql-suite 
+📁 circle-marketing-analytics-sql-pipelines 
 ├─ 📁 challenge-01-inventory/                
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
@@ -23,7 +23,7 @@ A portfolio of SQL challenges completed during Le Wagon’s Data Analytics Bootc
 │  └─ 📄 README.md
 └─ 📄 README.md                               
 ```
-Each challenge folder contains the **exact SQL** used in `sql-queries/` and a short local README with run notes. This top-level README summarizes objectives and artifacts across the suite.
+Each challenge folder contains the **exact SQL** used in `sql-queries/` and a short local README with run notes. This top-level README summarizes objectives and artifacts across the pipeline.
 
 ---
 
