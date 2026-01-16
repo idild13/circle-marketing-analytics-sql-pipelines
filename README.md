@@ -1,29 +1,26 @@
 # Circle Marketing Analytics — Automated SQL Pipelines
 
-A portfolio of SQL challenges completed during Le Wagon’s Data Analytics Bootcamp using BigQuery for **Circle**, a circular, eco-responsible sportswear brand. Each challenge focuses on a different analytics workflow: **inventory**, **aggregation & pivots**, **parcel logistics**, and **sales funnel**. The work emphasizes **views vs. tables**, pipeline design, and performance trade-offs.
+Automated SQL pipelines completed during Le Wagon’s Data Analytics Bootcamp using BigQuery for **Circle**, a circular, eco-responsible sportswear brand. Each section focuses on a different analytics workflow: **inventory**, **aggregation & pivots**, and **sales funnel**. The work emphasizes **views vs. tables**, pipeline design, and performance trade-offs.
 
 ---
 
 ## 📂 Repository Structure
 ```text
 📁 circle-marketing-analytics-sql-pipelines 
-├─ 📁 challenge-01-inventory/                
+├─ 📁 inventory/                
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
-├─ 📁 challenge-02-aggregation-pivot/
+├─ 📁 aggregation-pivot/
 │  ├─ 📁 Screenshots/     
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
-├─ 📁 challenge-03-parcel-tracking/ (skipped)         
-│  ├─ 📁 sql-queries/
-│  └─ 📄 README.md
-├─ 📁 challenge-04-acquisition-funnel/
+├─ 📁 acquisition-funnel/
 │  ├─ 📁 Screenshots/         
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
 └─ 📄 README.md                               
 ```
-Each challenge folder contains the **exact SQL** used in `sql-queries/` and a short local README with run notes. This top-level README summarizes objectives and artifacts across the pipeline.
+Each folder contains the **exact SQL** used in `sql-queries/` and a short local README with run notes. This top-level README summarizes objectives and artifacts across the pipeline.
 
 ---
 
@@ -37,9 +34,9 @@ Each challenge folder contains the **exact SQL** used in `sql-queries/` and a sh
 
 ---
 
-## 📝 Challenge Details
+## 📝 Project Details
 
-### ✅ Challenge 01 — Data Request: Circle Inventory Management
+### ✅ Data Request: Circle Inventory Management
 
 **Goal:** Transform raw stock data into an enriched KPI dataset and compare **views vs. tables** for freshness and cost.
 
@@ -68,12 +65,12 @@ Later, the pipeline was restructured to replace intermediate tables with views, 
 
 ---
 
-### 📊 Challenge 02 — Aggregation & SQL Pivot Table
+### 📊 Aggregation & SQL Pivot Table
 
 **Goal:** Roll up KPIs, build pivot-style summaries, and estimate days of stock for top sellers.
 
 **Source**
-- `circle_stock_kpi` (output of Challenge 01)
+- `circle_stock_kpi` (output of Data Request: Circle Inventory Management)
 
 **Analyses**
 - **Global metrics**: product counts, shortage rate, total stock & stock value  
@@ -101,22 +98,7 @@ This reinforced the **hybrid pipeline strategy**.
 
 ---
 
-### 📦 Challenge 03 — Parcel Tracking *(Skipped)*
-
-Planned (but not implemented) analysis for the logistics team: shipment status, delivery times, delays, and refund rates.
-
-**Data (for future use)**
-- `cc_parcel`
-- `cc_parcel_product`
-
-**Intended outputs**
-- `cc_parcel_kpi` with `status`, `shipping_time`, `delivery_time`, `total_time`  
-- Aggregations by carrier, priority, and month  
-- Delay metrics (`delay_rate`)
-
----
-
-### 🧲 Challenge 04 — Acquisition Funnel
+### 🧲 Acquisition Funnel
 
 **Goal:** Build a complete **Lead → Opportunity → Customer** funnel with conversion rates and cycle times to support the sales team.
 
@@ -159,14 +141,13 @@ Planned (but not implemented) analysis for the logistics team: shipment status, 
    - Parcels: `cc_parcel`, `cc_parcel_product`  
    - Funnel: `cc_funnel`  
 
-2) **Create views** in order (per challenge). Use `_view` suffix for reusable logic.
+2) **Create views** in order (per section). Use `_view` suffix for reusable logic.
 
 3) **Materialize** heavy/slow queries as **tables** where freshness isn’t critical (e.g., `cc_sales_daily`).
 
 4) **Validate**:
    - Run inventory views; update the source sheet; confirm auto-refresh via views
    - Compare **performance**: `cc_sales_daily_view` vs `cc_stock` (rows read, slot time)
-   - Inspect parcel KPIs & delay rates (if implementing Challenge 03 later)
    - Check funnel conversion rates & times by priority and month
 
 ---
