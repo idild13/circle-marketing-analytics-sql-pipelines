@@ -1,4 +1,4 @@
--- Challenge 04: Acquisition Funnel
+-- 03: Acquisition Funnel
 -- Notes + queries
 
 -------------------------------
