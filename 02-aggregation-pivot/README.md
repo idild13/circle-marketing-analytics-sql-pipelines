@@ -1,6 +1,6 @@
 # 02 — Aggregation & SQL Pivot Table
 
-This challenge builds on the enriched `circle_stock_kpi` table from Challenge 1.  
+This challenge builds on the enriched `circle_stock_kpi` table from 01 - inventory.  
 It focuses on summarizing KPIs and analyzing **top-selling products** to help the purchasing team:  
 
 - **Control stockouts** by monitoring shortage rates.  
