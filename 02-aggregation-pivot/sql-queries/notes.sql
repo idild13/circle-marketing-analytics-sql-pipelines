@@ -1,4 +1,4 @@
--- Challenge 02: Aggregation & SQL Pivot Table
+-- 02: Aggregation & SQL Pivot Table
 -- Notes + queries
 
 -------------------------------
