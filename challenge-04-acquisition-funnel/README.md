@@ -1,4 +1,4 @@
-# Challenge 04 — Acquisition Funnel
+# 03 — Acquisition Funnel
 
 This challenge focuses on analyzing **Circle’s B2B acquisition funnel** to help the sales team monitor leads, opportunities, and customers.
 
