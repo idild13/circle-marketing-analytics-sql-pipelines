@@ -1,4 +1,4 @@
-# Challenge 02 — Aggregation & SQL Pivot Table
+# 02 — Aggregation & SQL Pivot Table
 
 This challenge builds on the enriched `circle_stock_kpi` table from Challenge 1.  
 It focuses on summarizing KPIs and analyzing **top-selling products** to help the purchasing team:  
