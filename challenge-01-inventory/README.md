@@ -1,4 +1,4 @@
-# Challenge 01 — Circle Inventory Management
+# 01 — Circle Inventory Management
 
 This challenge focuses on cleaning and enriching **Circle’s stock data** in BigQuery to help the purchasing team monitor shortages, anticipate sales, and place the right orders on time.
 
