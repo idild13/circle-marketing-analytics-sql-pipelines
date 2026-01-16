@@ -82,4 +82,4 @@ A cleaned and enriched dataset that gives the purchasing team a clear picture of
 - product categories,  
 - and stock value.  
 
-Ready for downstream analysis, pivoting (Challenge 02), and dashboards.
+Ready for downstream analysis, pivoting (02-aggregation-pivot), and dashboards.
