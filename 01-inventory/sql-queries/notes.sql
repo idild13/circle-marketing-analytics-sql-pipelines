@@ -1,4 +1,4 @@
--- Challenge 01: Circle Inventory Management
+-- 01: Circle Inventory Management
 -- Notes + queries
 
 -------------------------------
