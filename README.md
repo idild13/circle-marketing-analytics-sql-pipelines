@@ -1,4 +1,4 @@
-# Circle Marketing Analytics — Automated SQL Pipelines
+# Circle Analytics — Automated SQL Pipelines
 
 Automated SQL pipelines completed during Le Wagon’s Data Analytics Bootcamp using BigQuery for **Circle**, a circular, eco-responsible sportswear brand. Each section focuses on a different analytics workflow: **inventory**, **aggregation & pivots**, and **sales funnel**. The work emphasizes **views vs. tables**, pipeline design, and performance trade-offs.
 
@@ -6,7 +6,7 @@ Automated SQL pipelines completed during Le Wagon’s Data Analytics Bootcamp us
 
 ## 📂 Repository Structure
 ```text
-📁 circle-marketing-analytics-sql-pipelines 
+📁 circle-analytics-sql-pipelines 
 ├─ 📁 inventory/                
 │  ├─ 📁 sql-queries/
 │  └─ 📄 README.md
